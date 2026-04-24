@@ -68,7 +68,8 @@ def _load_prices() -> dict:
             pass
 
     last_updated = prices.get("_metadata", {}).get("last_updated")
-    if last_updated != _date.today().isoformat():
+    is_vercel = os.environ.get("VERCEL") == "1"
+    if last_updated != _date.today().isoformat() and not is_vercel:
         print("[PriceScraper] Prices stale — scraping on demand...")
         try:
             from tools.price_scraper import run_scrape
@@ -181,6 +182,14 @@ def get_price_history(fish_type: str, market: str, days: int = 7, date: str = No
     if not matched_fish:
         return {"error": f"Fish type '{fish_type}' not found in history for {matched_market}."}
 
+    # ── Build full trend (shared by both single-date and full responses) ──
+    trend = []
+    for entry in window:
+        city_prices = entry.get("prices", {}).get(matched_market, {})
+        p = city_prices.get(matched_fish)
+        if p is not None:
+            trend.append({"date": entry["date"], "price": p})
+
     # ── Single date lookup ──────────────────────────────────────────────
     if target_date:
         for entry in window:
@@ -194,19 +203,12 @@ def get_price_history(fish_type: str, market: str, days: int = 7, date: str = No
                         "price": price,
                         "unit": "per kg",
                         "note": f"Price on {target_date}",
+                        "history": trend,
                     }
         return {
             "error": f"No data for {matched_fish} in {matched_market} on {target_date}. "
                      f"Available dates: {[e['date'] for e in window]}",
         }
-
-    # ── Full trend ──────────────────────────────────────────────────────
-    trend = []
-    for entry in window:
-        city_prices = entry.get("prices", {}).get(matched_market, {})
-        price = city_prices.get(matched_fish)
-        if price is not None:
-            trend.append({"date": entry["date"], "price": price})
 
     return {
         "fish_type": matched_fish,

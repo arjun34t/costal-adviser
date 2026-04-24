@@ -55,7 +55,8 @@ TOOLS = [
         "function": {
             "name": "get_price_history",
             "description": (
-                "Returns the price trend for a fish variety over the last 7 days. "
+                "Returns the 7-day price trend for a fish variety. "
+                "When multiple fish are mentioned, call this tool once per fish type in parallel. "
                 "Call this (along with get_market_price) when the fisherman mentions "
                 "catching, landing, or having fish to sell — to compare today's price "
                 "against recent prices and advise whether to sell now or store. "

@@ -19,9 +19,9 @@ def call_llm_events(
       {"type": "message",   "response": <str>} — final answer
     """
     if language == "en":
-        lang_instruction = "\nYou must reply in English language only. Use simple clear English."
+        lang_instruction = "\nCRITICAL: You must ALWAYS reply in English only, regardless of the language the user wrote in. Never switch to Malayalam."
     else:
-        lang_instruction = "\nYou must reply in Malayalam language only. Use simple Malayalam a fisherman can understand."
+        lang_instruction = "\nCRITICAL: You must ALWAYS reply in Malayalam only, regardless of the language the user wrote in. Never switch to English."
 
     # ── Foul language check ──────────────────────────────────────────────
     if is_foul(prompt):
