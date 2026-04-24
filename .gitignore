@@ -1,0 +1,19 @@
+# Node dependencies
+node_modules/
+**/node_modules/
+
+# Package manager caches and logs
+.npm/
+.pnpm-store/
+.yarn/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+.vercel
+
+# Environment variables
+.env
+.env.local
+.env*.local

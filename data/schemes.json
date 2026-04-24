@@ -1,0 +1,30 @@
+[
+  {
+    "name": "PM Matsya Sampada Yojana",
+    "keywords": ["boat", "vessel", "equipment", "infrastructure", "new boat", "purchase", "buy"],
+    "eligibility": "All fishermen, fish farmers, SHGs, cooperatives, and entrepreneurs in the fisheries sector. Both marine and inland fishers are eligible.",
+    "benefit": "Subsidy of 40-60% on purchase of fishing boats, nets, and equipment. Financial assistance up to Rs 3 lakh for individual fishers and up to Rs 20 lakh for groups/cooperatives.",
+    "how_to_apply": "Apply through the state fisheries department office or online at pmmsy.dof.gov.in with Aadhaar, fisherman ID card, and bank account details."
+  },
+  {
+    "name": "FIDF - Fisheries Infrastructure Development Fund",
+    "keywords": ["infrastructure", "cold storage", "ice plant", "harbour", "landing centre", "processing"],
+    "eligibility": "State governments, cooperatives, and registered fish processing companies with valid licences.",
+    "benefit": "Concessional loan at 5% interest rate for up to 12 years for building fish landing centres, cold storage units, ice plants, and fish processing facilities.",
+    "how_to_apply": "Apply through NABARD or scheduled commercial banks with a detailed project report. Contact the nearest NABARD district office or state fisheries department."
+  },
+  {
+    "name": "Kerala Fisheries Department Accident Insurance Scheme",
+    "keywords": ["insurance", "accident", "death", "injury", "compensation", "safety"],
+    "eligibility": "All active fishermen registered with the Kerala Fisheries Department who hold a valid fisherman identity card.",
+    "benefit": "Rs 5 lakh compensation for accidental death at sea. Rs 2 lakh for permanent disability. Rs 50,000 for partial disability. Free treatment at government hospitals for injuries.",
+    "how_to_apply": "Register at the nearest fisheries extension office with your fisherman ID card and Aadhaar. In case of a claim, contact the district fisheries officer within 30 days of the accident."
+  },
+  {
+    "name": "Diesel Subsidy Scheme for Fishermen",
+    "keywords": ["diesel", "fuel", "subsidy", "petrol", "engine", "cost", "expenses"],
+    "eligibility": "Registered fishermen owning mechanised or motorised fishing boats with a valid Kerala fisherman identity card and boat registration certificate.",
+    "benefit": "Subsidy of Rs 2.50 per litre on diesel purchased for fishing vessels. Annual limit of 4,000 litres per boat. Credited directly to the fisherman's bank account (DBT).",
+    "how_to_apply": "Register your boat and Aadhaar-linked bank account at the district fisheries office. Obtain a diesel smart card and fill diesel at authorised bunks to automatically receive the subsidy via DBT."
+  }
+]

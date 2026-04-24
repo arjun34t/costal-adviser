@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fisher Adviser</title>
+  <link rel="stylesheet" href="style-modern.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand-block">
+        <div class="brand-mark" aria-hidden="true">🐟</div>
+        <div class="brand-copy">
+          <p class="eyebrow" data-ml="കേരള തീരസഹായി" data-en="Kerala Coastal Assistant">കേരള തീരസഹായി</p>
+          <h1>Fisher Adviser</h1>
+          <p class="brand-sub" id="heroSubtitle" data-ml="കാലാവസ്ഥ, വില, പദ്ധതി വിവരങ്ങൾ ഒരേ ഇടത്ത്" data-en="Sea safety, market prices, and scheme guidance in one place">കാലാവസ്ഥ, വില, പദ്ധതി വിവരങ്ങൾ ഒരേ ഇടത്ത്</p>
+        </div>
+      </div>
+
+      <div class="topbar-actions">
+        <button class="icon-button theme-toggle" id="themeToggle" type="button" data-ml-title="തീം മാറ്റുക" data-en-title="Toggle Theme" title="Toggle Theme">
+          <span id="themeIcon" aria-hidden="true">☀️</span>
+        </button>
+        <button class="icon-button audio-toggle" id="audioToggle" type="button" data-ml-title="ശബ്ദ മറുപടി ഓൺ/ഓഫ്" data-en-title="Toggle voice response" title="Toggle voice response">
+          <span id="audioIcon" aria-hidden="true">🔇</span>
+        </button>
+        <button class="icon-button" id="settingsBtn" type="button" data-ml-title="ക്രമീകരണം" data-en-title="Settings" title="Settings">
+          <span aria-hidden="true">⚙️</span>
+        </button>
+        <select class="lang-select" id="langSelect" title="Select language">
+          <option value="ml">മലയാളം</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+    </header>
+
+
+
+    <main class="workspace">
+      <aside class="sidebar-card">
+        <section class="sidebar-section">
+          <div class="section-head">
+            <h2 data-ml="നിലവിലെ സ്ഥലം" data-en="Current location">നിലവിലെ സ്ഥലം</h2>
+            <span class="section-badge" data-ml="തീരദേശം" data-en="Coastal">തീരദേശം</span>
+          </div>
+
+          <button class="location-summary" id="searchLocationBtn" type="button">
+            <span class="location-icon" aria-hidden="true">📍</span>
+            <span class="location-text">
+              <strong id="locationDisplay" data-ml="തീരദേശ സ്ഥലം തിരഞ്ഞെടുക്കുക" data-en="Select coastal location">തീരദേശ സ്ഥലം തിരഞ്ഞെടുക്കുക</strong>
+              <small id="districtDisplay" data-ml="ജില്ല ലഭ്യമല്ല" data-en="District not set">ജില്ല ലഭ്യമല്ല</small>
+            </span>
+          </button>
+
+          <div class="sidebar-actions">
+            <button class="secondary-button danger-button" id="clearChatBtn" type="button" data-ml="ചാറ്റ് മായ്ക്കുക" data-en="Clear chat">ചാറ്റ് മായ്ക്കുക</button>
+          </div>
+        </section>
+
+        <section class="sidebar-section">
+          <div class="section-head">
+            <h2 data-ml="വേഗത്തിൽ ചോദിക്കുക" data-en="Quick prompts">വേഗത്തിൽ ചോദിക്കുക</h2>
+          </div>
+          <div class="quick-actions" id="quickActions"></div>
+        </section>
+
+
+      </aside>
+
+      <section class="chat-panel">
+        <div class="conversation-head">
+          <div>
+            <p class="conversation-label" data-ml="സ്മാർട്ട് സഹായി" data-en="Smart assistant">സ്മാർട്ട് സഹായി</p>
+            <h2 data-ml="സുരക്ഷിതവും വ്യക്തവുമായ നിർദേശങ്ങൾ" data-en="Clear, action-oriented guidance">സുരക്ഷിതവും വ്യക്തവുമായ നിർദേശങ്ങൾ</h2>
+          </div>
+          <div class="conversation-meta">
+            <span class="meta-pill" id="locationMeta" data-ml="സ്ഥലം തിരഞ്ഞെടുത്തിട്ടില്ല" data-en="No location selected">സ്ഥലം തിരഞ്ഞെടുത്തിട്ടില്ല</span>
+          </div>
+        </div>
+
+        <div class="chat-window" id="chatWindow">
+          <div class="empty-state" id="emptyState">
+            <div class="empty-state-card">
+              <div class="empty-icon" aria-hidden="true">🌊</div>
+              <h3 id="emptyTitle" data-ml="നിങ്ങളുടെ സഹായി തയ്യാറാണ്" data-en="Your assistant is ready">നിങ്ങളുടെ സഹായി തയ്യാറാണ്</h3>
+              <p id="emptyDescription" data-ml="ടെക്സ്റ്റ് ഉപയോഗിച്ചോ ശബ്ദം ഉപയോഗിച്ചോ ചോദിക്കാം. ഏറ്റവും നല്ല ഉത്തരങ്ങൾക്ക് നിങ്ങളുടെ തീരദേശ സ്ഥലം തിരഞ്ഞെടുക്കുക." data-en="Ask by text or voice. Select your coastal location for more relevant answers.">ടെക്സ്റ്റ് ഉപയോഗിച്ചോ ശബ്ദം ഉപയോഗിച്ചോ ചോദിക്കാം. ഏറ്റവും നല്ല ഉത്തരങ്ങൾക്ക് നിങ്ങളുടെ തീരദേശ സ്ഥലം തിരഞ്ഞെടുക്കുക.</p>
+            </div>
+          </div>
+        </div>
+
+        <footer class="composer-card">
+          <div class="composer-row">
+            <div class="input-wrapper" style="position: relative; flex: 1; display: flex;">
+              <textarea
+                id="textInput"
+                class="text-input"
+                rows="1"
+                data-ml-placeholder="ചോദ്യം ടൈപ്പ് ചെയ്യുക…"
+                data-en-placeholder="Type your question…"
+                placeholder="ചോദ്യം ടൈപ്പ് ചെയ്യുക…"
+                style="padding-right: 50px;"
+              ></textarea>
+              <button class="icon-button mic-btn" id="micBtn" type="button" data-ml-title="ശബ്ദം ഉപയോഗിച്ച് ചോദിക്കുക" data-en-title="Ask by voice" title="Ask by voice" style="position: absolute; right: 8px; bottom: 8px; width: 40px; height: 40px; background: transparent; border: none; box-shadow: none;">
+                <span aria-hidden="true">🎙️</span>
+              </button>
+            </div>
+            <button class="send-btn" id="sendBtn" type="button" data-ml-title="അയയ്ക്കുക" data-en-title="Send message" title="Send message">
+              <span aria-hidden="true">➜</span>
+            </button>
+          </div>
+        </footer>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-overlay hidden" id="locationModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <p class="modal-eyebrow" data-ml="സ്ഥലം തിരഞ്ഞെടുക്കുക" data-en="Choose a location">സ്ഥലം തിരഞ്ഞെടുക്കുക</p>
+          <h3 data-ml="തീരദേശ പ്രദേശം" data-en="Coastal location">തീരദേശ പ്രദേശം</h3>
+        </div>
+        <button class="modal-close" id="closeLocationModal" type="button" aria-label="Close">✕</button>
+      </div>
+      <input
+        type="text"
+        id="locationSearch"
+        class="location-search-input"
+        data-ml-placeholder="സ്ഥലം തിരയുക…"
+        data-en-placeholder="Search location…"
+        placeholder="Search location…"
+        autocomplete="off"
+      />
+      <div class="location-list" id="locationList"></div>
+      <div class="location-confirm hidden" id="locationConfirm">
+        <p class="confirm-title" data-ml="ഇത് ശരിയായ സ്ഥലമാണോ?" data-en="Is this the correct location?">ഇത് ശരിയായ സ്ഥലമാണോ?</p>
+        <p id="locationConfirmText"></p>
+        <div class="confirm-buttons">
+          <button class="confirm-yes" id="confirmLocationBtn" type="button" data-ml="ഉറപ്പിക്കുക" data-en="Confirm">ഉറപ്പിക്കുക</button>
+          <button class="confirm-no" id="changeLocationBtn" type="button" data-ml="മാറ്റുക" data-en="Change">മാറ്റുക</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="recording-overlay hidden" id="recordingOverlay">
+    <div class="recording-card">
+      <div class="recording-pulse"></div>
+      <p data-ml="റെക്കോർഡ് ചെയ്യുന്നു…" data-en="Recording…">റെക്കോർഡ് ചെയ്യുന്നു…</p>
+      <button id="stopRecordBtn" type="button" data-ml="നിർത്തുക" data-en="Stop">നിർത്തുക</button>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay hidden" id="settingsModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <p class="modal-eyebrow" data-ml="ക്രമീകരണം" data-en="Settings">ക്രമീകരണം</p>
+          <h3 data-ml="API കീ അപ്‌ഡേറ്റ് ചെയ്യുക" data-en="Update API Key">API കീ അപ്‌ഡേറ്റ് ചെയ്യുക</h3>
+        </div>
+        <button class="modal-close" id="closeSettingsModal" type="button" aria-label="Close">✕</button>
+      </div>
+      <div style="padding: 1rem 0 0.5rem;">
+        <!-- Current key indicator -->
+        <div id="currentKeyInfo" style="display:flex; align-items:center; gap:0.5rem; margin-bottom:1rem; padding:0.5rem 0.75rem; border-radius:8px; background:var(--surface-alt, rgba(0,0,0,0.05)); font-size:0.85rem;">
+          <span id="keyStatusDot" style="width:8px;height:8px;border-radius:50%;background:#ccc;flex-shrink:0;"></span>
+          <span id="keyStatusLabel" style="opacity:0.6;" data-ml="ലോഡ് ചെയ്യുന്നു…" data-en="Loading…">Loading…</span>
+        </div>
+
+        <label style="display:block; margin-bottom: 0.5rem; font-size: 0.85rem; opacity: 0.7;" data-ml="പുതിയ Sarvam API കീ" data-en="New Sarvam API Key">New Sarvam API Key</label>
+        <input
+          type="password"
+          id="sarvamKeyInput"
+          style="width: 100%; padding: 0.6rem 0.8rem; border-radius: 8px; border: 1px solid var(--border); background: var(--input-bg, var(--surface)); color: var(--text); font-size: 0.95rem; box-sizing: border-box;"
+          data-ml-placeholder="പുതിയ API കീ ഇവിടെ ഒട്ടിക്കുക"
+          data-en-placeholder="Paste new API key here"
+          placeholder="Paste new API key here"
+          autocomplete="off"
+        />
+        <p id="settingsStatus" style="margin-top: 0.5rem; font-size: 0.85rem; min-height: 1.2em;"></p>
+      </div>
+      <div class="confirm-buttons">
+        <button class="confirm-yes" id="saveSettingsBtn" type="button" data-ml="സേവ് ചെയ്യുക" data-en="Save">Save</button>
+        <button class="confirm-no" id="revertKeyBtn" type="button" data-ml="ഡെവലപ്പർ കീ ഉപയോഗിക്കുക" data-en="Use Developer's Key">Use Developer's Key</button>
+        <button class="confirm-no" id="cancelSettingsBtn" type="button" data-ml="റദ്ദാക്കുക" data-en="Cancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app-modern.js"></script>
+</body>
+</html>

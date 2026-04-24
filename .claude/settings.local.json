@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(.venv/Scripts/pip install:*)",
+      "Bash(.venv/Scripts/python.exe:*)",
+      "Bash(curl -s http://localhost:8000/health)",
+      "Bash(.venv/Scripts/python:*)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(python -c ':*)",
+      "Bash(python -c \"from agent.llm import call_llm; print\\(call_llm\\('Which government schemes can I use?', language='en', district='Kozhikode', history=[]\\)\\)\")",
+      "Bash(python:*)",
+      "Bash(npm install:*)",
+      "Bash(npm ls:*)",
+      "Bash(npm run:*)"
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+google-genai
+openai
+python-dotenv
+openmeteo-requests
+requests-cache
+retry-requests
+fastapi
+uvicorn
+python-multipart
+deep-translator
+requests
+beautifulsoup4
