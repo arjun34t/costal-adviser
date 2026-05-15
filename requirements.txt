@@ -10,3 +10,4 @@ python-multipart
 deep-translator
 requests
 beautifulsoup4
+playwright

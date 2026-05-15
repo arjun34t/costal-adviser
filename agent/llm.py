@@ -18,11 +18,6 @@ def call_llm_events(
       {"type": "tool_call", "tool": <name>}   — before each tool executes
       {"type": "message",   "response": <str>} — final answer
     """
-    if language == "en":
-        lang_instruction = "\nCRITICAL: You must ALWAYS reply in English only, regardless of the language the user wrote in. Never switch to Malayalam."
-    else:
-        lang_instruction = "\nCRITICAL: You must ALWAYS reply in Malayalam only, regardless of the language the user wrote in. Never switch to English."
-
     # ── Foul language check ──────────────────────────────────────────────
     if is_foul(prompt):
         lang_key = language if language in FOUL_RESPONSE else "en"
@@ -70,17 +65,55 @@ def call_llm_events(
             f"You should call: {', '.join(relevant_tools)}."
         )
 
+    lang_map = {
+        "ml": "Malayalam",
+        "en": "English",
+        "hi": "Hindi",
+        "ta": "Tamil",
+        "te": "Telugu"
+    }
+    lang_name = lang_map.get(language, "Malayalam")
+    
+    prompt_with_enforcement = prompt
+
+    LANGUAGE_RULES = {
+        "en": """
+You MUST reply ONLY in English.
+Never use Malayalam.
+Even if the user writes in Malayalam, translate internally and answer in English.
+""",
+        "ml": """
+നിങ്ങൾ എല്ലായ്പ്പോഴും മലയാളത്തിൽ മാത്രം മറുപടി നൽകണം.
+ഇംഗ്ലീഷ് ഉപയോഗിക്കരുത്.
+"""
+    }
+
+    system_content = f"""
+{SYSTEM_PROMPT}
+
+{LANGUAGE_RULES.get(language, LANGUAGE_RULES["en"])}
+
+{location_context}
+
+{intent_hint}
+"""
+
     messages = [
-        {"role": "system", "content": SYSTEM_PROMPT + location_context + lang_instruction + intent_hint},
+        {"role": "system", "content": system_content},
         *normalize_history(history),
-        {"role": "user", "content": prompt},
+        {"role": "user", "content": prompt_with_enforcement},
     ]
+    print(f"[LLM] Language: {language}")
     seen_calls: set[str] = set()
 
     for _round in range(MAX_TOOL_ROUNDS):
+        # Guarantee the language enforcement is the absolutely last instruction before generation
+        current_messages = messages + [
+            {"role": "system", "content": f"CRITICAL REMINDER: You MUST reply in {lang_name}. Do not use any other language, even if the previous messages or tool data were in a different language."}
+        ]
         for attempt in range(3):
             try:
-                response = _chat(messages=messages, tools=TOOLS)
+                response = _chat(messages=current_messages, tools=TOOLS)
                 break
             except BadRequestError as e:
                 if "tool_use_failed" in str(e) and attempt < 2:

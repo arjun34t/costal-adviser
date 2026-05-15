@@ -13,7 +13,21 @@ pnpm-debug.log*
 
 .vercel
 
+# Python
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Build
+dist/
+build/
+.next/
+
 # Environment variables
 .env
 .env.local
 .env*.local
+

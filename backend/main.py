@@ -65,6 +65,7 @@ class ChatRequest(BaseModel):
 
 class SynthesizeRequest(BaseModel):
     text: str
+    language: Optional[str] = "ml"
 
 
 class TranslateRequest(BaseModel):
@@ -105,6 +106,7 @@ def health():
 @app.post("/chat")
 def chat(req: ChatRequest):
     lang = req.language or "ml"
+    print(f"[Backend] Received chat request. lang={lang}")
 
     # Resolve profile location if phone provided
     coastal_location = None
@@ -271,7 +273,7 @@ async def voice_transcribe(audio: UploadFile = File(...), language: str = Form("
 
 @app.post("/voice/synthesize")
 def voice_synthesize(req: SynthesizeRequest):
-    success = text_to_speech(req.text, TTS_OUTPUT_PATH)
+    success = text_to_speech(req.text, TTS_OUTPUT_PATH, req.language)
     if not success:
         raise HTTPException(status_code=500, detail="TTS failed")
     return FileResponse(TTS_OUTPUT_PATH, media_type="audio/wav", filename="tts_output.wav")

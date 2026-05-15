@@ -136,8 +136,9 @@ def _merge_wav_bytes(wav_chunks: list) -> bytes:
     return buf.getvalue()
 
 
-def _call_sarvam_tts(inputs: list) -> list:
+def _call_sarvam_tts(inputs: list, language: str = "ml") -> list:
     """Call Sarvam TTS with a list of text inputs. Returns list of raw WAV bytes."""
+    lang_code = _SARVAM_LANG.get(language, "ml-IN")
     response = requests.post(
         TTS_URL,
         headers={
@@ -146,7 +147,7 @@ def _call_sarvam_tts(inputs: list) -> list:
         },
         json={
             "inputs": inputs,
-            "target_language_code": "ml-IN",
+            "target_language_code": lang_code,
             "model": "bulbul:v2",
         },
         timeout=TIMEOUT,
@@ -195,7 +196,7 @@ def transcribe_audio(audio_file_path: str, language: str = "ml") -> str:
     return transcript
 
 
-def text_to_speech(text: str, output_path: str) -> bool:
+def text_to_speech(text: str, output_path: str, language: str = "ml") -> bool:
     if not text.strip():
         print("[TTS] Empty text — skipping.")
         return False
@@ -219,7 +220,7 @@ def text_to_speech(text: str, output_path: str) -> bool:
         for i in range(0, len(chunks), BATCH):
             batch = chunks[i : i + BATCH]
             print(f"[TTS] Sending batch {i // BATCH + 1}: {[len(c) for c in batch]} chars")
-            wav_parts = _call_sarvam_tts(batch)
+            wav_parts = _call_sarvam_tts(batch, language)
             all_wav.extend(wav_parts)
 
         # Step 4: merge and write

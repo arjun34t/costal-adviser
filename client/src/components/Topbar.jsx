@@ -2,7 +2,7 @@ import React from "react";
 import { useApp } from "../context/AppContext.jsx";
 import { LABELS } from "../constants.js";
 
-export default function Topbar({ devPanelOpen, onToggleDevPanel }) {
+export default function Topbar({ devPanelOpen, onToggleDevPanel, onToggleSidebar }) {
   const { lang, changeLang, audioEnabled, changeAudio, theme, changeTheme, addNotice } = useApp();
   const L = LABELS[lang];
 
@@ -15,6 +15,13 @@ export default function Topbar({ devPanelOpen, onToggleDevPanel }) {
   return (
     <header className="topbar">
       <div className="brand-block">
+        <button
+          className="icon-button mobile-menu-btn"
+          onClick={onToggleSidebar}
+          aria-label="Toggle menu"
+        >
+          ☰
+        </button>
         <div className="brand-mark">🐟</div>
         <div className="brand-copy">
           <p className="eyebrow">Fisher Adviser</p>

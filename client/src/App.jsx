@@ -9,16 +9,24 @@ import DevPanel from "./components/DevPanel.jsx";
 function AppShell() {
   const [locationModalOpen, setLocationModalOpen] = useState(false);
   const [devPanelOpen, setDevPanelOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="app-shell">
+    <div className={`app-shell ${sidebarOpen ? "sidebar-mobile-open" : ""}`}>
       <Topbar
         devPanelOpen={devPanelOpen}
         onToggleDevPanel={() => setDevPanelOpen((v) => !v)}
+        onToggleSidebar={() => setSidebarOpen((v) => !v)}
       />
       <main className="workspace">
-        <div className="sidebar-wrapper">
-          <Sidebar onOpenLocation={() => setLocationModalOpen(true)} />
+        {sidebarOpen && (
+          <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />
+        )}
+        <div className={`sidebar-wrapper ${sidebarOpen ? "mobile-visible" : ""}`}>
+          <Sidebar
+            onOpenLocation={() => setLocationModalOpen(true)}
+            onClose={() => setSidebarOpen(false)}
+          />
           {devPanelOpen && (
             <DevPanel onClose={() => setDevPanelOpen(false)} />
           )}

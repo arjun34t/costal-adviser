@@ -148,12 +148,7 @@ export function AppProvider({ children }) {
         let audioBlob = null;
         if (audioEnabled) {
           try {
-            let ttsText = response;
-            if (activeLang === "en") {
-              const transRes = await translateText(response, "ml");
-              ttsText = transRes.translated || response;
-            }
-            audioBlob = await synthesizeSpeech(ttsText);
+            audioBlob = await synthesizeSpeech(response, activeLang);
           } catch (_) {
             // TTS failure is non-fatal
           }

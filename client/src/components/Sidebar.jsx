@@ -2,7 +2,7 @@ import React from "react";
 import { useApp } from "../context/AppContext.jsx";
 import { LABELS } from "../constants.js";
 
-export default function Sidebar({ onOpenLocation }) {
+export default function Sidebar({ onOpenLocation, onClose }) {
   const { lang, selectedLocation, selectedDistrict, messages, clearMessages, sendMessage, addNotice } = useApp();
   const L = LABELS[lang];
 
@@ -16,6 +16,9 @@ export default function Sidebar({ onOpenLocation }) {
 
   return (
     <aside className="sidebar-card">
+      <button className="icon-button mobile-close-btn" onClick={onClose} aria-label="Close menu">
+        ✕
+      </button>
       <div className="sidebar-section">
         <div className="section-head">
           <h2>{lang === "ml" ? "സ്ഥലം" : "Location"}</h2>
